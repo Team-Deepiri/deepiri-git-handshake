@@ -2,6 +2,7 @@
 name = "deepiri-git-handshake"
 version = "0.2.0"
 description = "TUI + CLI credential vault: SSH/HTTPS profiles, OS keyring PAT, git-credential-dgh, clone by owner/repo"
+readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Team-Deepiri"}]
 license = "Apache-2.0"

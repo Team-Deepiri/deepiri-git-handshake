@@ -1,13 +1,14 @@
 [project]
 name = "deepiri-git-handshake"
-version = "0.1.0"
-description = "TUI: SSH/HTTPS auto-detect, credential setup automation, clone by owner/repo"
+version = "0.2.0"
+description = "TUI + CLI credential vault: SSH/HTTPS profiles, OS keyring PAT, git-credential-dgh, clone by owner/repo"
 requires-python = ">=3.10"
-authors = [{name = "Deepiri"}]
-license = {text = "MIT"}
-keywords = ["deepiri", "git", "tui", "clone", "ssh", "https", "credentials"]
+authors = [{name = "Team-Deepiri"}]
+license = "Apache-2.0"
+keywords = ["deepiri", "git", "tui", "clone", "ssh", "https", "credentials", "keyring"]
 dependencies = [
     "textual>=0.68.0",
+    "keyring>=25.0",
 ]
 
 [project.optional-dependencies]
@@ -16,6 +17,7 @@ dev = ["pytest>=7.0"]
 [project.scripts]
 deepiri-git-handshake = "deepiri_git_handshake.cli:main"
 dgh = "deepiri_git_handshake.cli:main"
+git-credential-dgh = "deepiri_git_handshake.forge_credential_helper:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

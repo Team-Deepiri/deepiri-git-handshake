@@ -117,11 +117,23 @@ If you use **GitHub CLI**, `gh auth login` plus `gh auth setup-git` remains a go
 | PATs | OS keyring under service `deepiri-git-handshake` |
 | Managed SSH snippet | `~/.ssh/config` (between `deepiri-git-handshake begin/end` markers per host) |
 
+## Troubleshooting
+
+- **`NoKeyringError` when storing a PAT** — Your environment has no keyring backend (common on minimal Linux or some CI images). Install a backend (for example `keyrings.alt`, or your distro’s Secret Service / KWallet integration) per the [keyring documentation](https://pypi.org/project/keyring/).
+- **`git-credential-dgh` not found** — Install the package so the `git-credential-dgh` script is on your `PATH`, or activate the same venv you used for `pip install -e .`.
+- **WSL** — Use the same guidance as Linux; ensure a D-Bus secret service is available if you expect the freedesktop backend.
+
 ## Development
 
 ```bash
 pip install -e '.[dev]'
 pytest
+```
+
+Quick local check (imports + optional pytest):
+
+```bash
+./scripts/smoke.sh
 ```
 
 ## Unregistering the git helper

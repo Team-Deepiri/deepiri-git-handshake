@@ -1,0 +1,12 @@
+# Exclude generated/build/runtime artifact paths.
+paths-ignore:
+  - '**/node_modules/**'
+  - '**/dist/**'
+  - '**/build/**'
+  - '**/coverage/**'
+  - '**/logs/**'
+  - '**/*.min.js'
+  - '**/.venv/**'
+  - '**/.mypy_cache/**'
+  - '**/.pytest_cache/**'
+  - '**/__pycache__/**'

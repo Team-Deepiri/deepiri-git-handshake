@@ -1,4 +1,4 @@
-# CodeQL Setup for deepiri-weft
+# CodeQL Setup for deepiri-wooven
 
 This folder contains the CodeQL configuration for security scanning in this repository.
 

@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.deepiri.weft</string>
+    <string>com.deepiri.wooven</string>
     <key>ProgramArguments</key>
     <array>
         <string>@PYTHON@</string>
         <string>-m</string>
-        <string>deepiri_weft.daemon</string>
+        <string>deepiri_wooven.daemon</string>
         <string>--foreground</string>
     </array>
     <key>RunAtLoad</key>
@@ -16,8 +16,8 @@
     <key>KeepAlive</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>@HOME@/Library/Logs/deepiri-weft.log</string>
+    <string>@HOME@/Library/Logs/deepiri-wooven.log</string>
     <key>StandardErrorPath</key>
-    <string>@HOME@/Library/Logs/deepiri-weft.log</string>
+    <string>@HOME@/Library/Logs/deepiri-wooven.log</string>
 </dict>
 </plist>

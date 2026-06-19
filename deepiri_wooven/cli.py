@@ -1,21 +1,21 @@
-"""CLI entry for Deepiri Weft."""
+"""CLI entry for Deepiri Wooven."""
 
 from __future__ import annotations
 
 import argparse
 import sys
 
-from deepiri_weft import __version__
-from deepiri_weft import cred_manager as cm
-from deepiri_weft import service as svc
-from deepiri_weft.credentials import manager_summary, setup_for_transport
-from deepiri_weft.ssh_config import apply_identity_block
+from deepiri_wooven import __version__
+from deepiri_wooven import cred_manager as cm
+from deepiri_wooven import service as svc
+from deepiri_wooven.credentials import manager_summary, setup_for_transport
+from deepiri_wooven.ssh_config import apply_identity_block
 
 
 def _cmd_cred_list(_: argparse.Namespace) -> int:
     profiles = cm.load_profiles()
     if not profiles and not cm.list_registered_helpers():
-        print("(no profiles; git credential.helper not using weft)")
+        print("(no profiles; git credential.helper not using wooven)")
         return 0
     for host in sorted(profiles):
         meta = profiles[host]
@@ -111,7 +111,7 @@ def _cmd_service_uninstall(_: argparse.Namespace) -> int:
 
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        description="Deepiri Weft — TUI clone + credential vault (weft).",
+        description="Deepiri Wooven — TUI clone + credential vault (wooven).",
     )
     p.add_argument("--version", action="store_true", help="Print version and exit")
     sub = p.add_subparsers(dest="command")
@@ -157,7 +157,7 @@ def _build_parser() -> argparse.ArgumentParser:
     g.add_argument("--clear", action="store_true")
     c_pat.set_defaults(func=_cmd_cred_pat)
 
-    c_helper = csub.add_parser("helper", help="Register or unregister git-credential-weft")
+    c_helper = csub.add_parser("helper", help="Register or unregister git-credential-wooven")
     c_helper.add_argument("--unregister", action="store_true")
     c_helper.set_defaults(func=_cmd_cred_helper)
 
@@ -213,9 +213,9 @@ def main() -> None:
         raise SystemExit(args.func(args))
     if args.command == "service":
         raise SystemExit(args.func(args))
-    from deepiri_weft.tui import WeftApp
+    from deepiri_wooven.tui import WoovenApp
 
-    WeftApp().run()
+    WoovenApp().run()
 
 
 if __name__ == "__main__":

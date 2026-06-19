@@ -1,11 +1,11 @@
 """Smoke tests for transport helpers."""
 
-from deepiri_weft.transport import clone_url
+from deepiri_wooven.transport import clone_url
 
 
 def test_clone_url_ssh():
-    assert clone_url("github.com", "Team-Deepiri", "deepiri-weft", "ssh") == (
-        "git@github.com:Team-Deepiri/deepiri-weft.git"
+    assert clone_url("github.com", "Team-Deepiri", "deepiri-wooven", "ssh") == (
+        "git@github.com:Team-Deepiri/deepiri-wooven.git"
     )
 
 

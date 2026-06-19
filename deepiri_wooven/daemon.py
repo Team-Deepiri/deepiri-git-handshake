@@ -11,10 +11,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from deepiri_weft.clone_resolver import resolve_clone_url
-from deepiri_weft.transport_prefs import socket_path
+from deepiri_wooven.clone_resolver import resolve_clone_url
+from deepiri_wooven.transport_prefs import socket_path
 
-LOG = logging.getLogger("deepiri_weft.daemon")
+LOG = logging.getLogger("deepiri_wooven.daemon")
 PID_FILE_NAME = "daemon.pid"
 
 

@@ -4,8 +4,8 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-$TaskName = "DeepiriWeft"
-$Action = New-ScheduledTaskAction -Execute $Python -Argument "-m deepiri_weft.daemon --foreground"
+$TaskName = "DeepiriWooven"
+$Action = New-ScheduledTaskAction -Execute $Python -Argument "-m deepiri_wooven.daemon --foreground"
 $Trigger = New-ScheduledTaskTrigger -AtLogOn
 $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
 $Principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited

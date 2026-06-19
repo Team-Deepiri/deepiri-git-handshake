@@ -1,10 +1,10 @@
 [Unit]
-Description=Deepiri Weft clone transport daemon
+Description=Deepiri Wooven clone transport daemon
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=@PYTHON@ -m deepiri_weft.daemon --foreground
+ExecStart=@PYTHON@ -m deepiri_wooven.daemon --foreground
 Restart=on-failure
 RestartSec=3
 Environment=PYTHONUNBUFFERED=1

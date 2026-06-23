@@ -1,20 +1,21 @@
-"""CLI entry for Deepiri Git Handshake."""
+"""CLI entry for Deepiri Wooven."""
 
 from __future__ import annotations
 
 import argparse
 import sys
 
-from deepiri_git_handshake import __version__
-from deepiri_git_handshake import cred_manager as cm
-from deepiri_git_handshake.credentials import manager_summary, setup_for_transport
-from deepiri_git_handshake.ssh_config import apply_identity_block
+from deepiri_wooven import __version__
+from deepiri_wooven import cred_manager as cm
+from deepiri_wooven import service as svc
+from deepiri_wooven.credentials import manager_summary, setup_for_transport
+from deepiri_wooven.ssh_config import apply_identity_block
 
 
 def _cmd_cred_list(_: argparse.Namespace) -> int:
     profiles = cm.load_profiles()
     if not profiles and not cm.list_registered_helpers():
-        print("(no profiles; git credential.helper not using dgh)")
+        print("(no profiles; git credential.helper not using wooven)")
         return 0
     for host in sorted(profiles):
         meta = profiles[host]
@@ -79,9 +80,38 @@ def _cmd_cred_setup(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_service_status(_: argparse.Namespace) -> int:
+    for line in svc.service_status():
+        print(line)
+    return 0
+
+
+def _cmd_service_start(args: argparse.Namespace) -> int:
+    ok, msg = svc.start_service(foreground=args.foreground)
+    print(msg)
+    return 0 if ok else 1
+
+
+def _cmd_service_stop(_: argparse.Namespace) -> int:
+    ok, msg = svc.stop_service()
+    print(msg)
+    return 0 if ok else 1
+
+
+def _cmd_service_install(args: argparse.Namespace) -> int:
+    return svc.run_install(skip_service=args.skip_service)
+
+
+def _cmd_service_uninstall(_: argparse.Namespace) -> int:
+    svc.stop_service()
+    ok, msg = svc.uninstall_platform_service()
+    print(msg)
+    return 0 if ok else 1
+
+
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
-        description="Deepiri Git Handshake — TUI clone + credential vault (dgh).",
+        description="Deepiri Wooven — TUI clone + credential vault (wooven).",
     )
     p.add_argument("--version", action="store_true", help="Print version and exit")
     sub = p.add_subparsers(dest="command")
@@ -127,7 +157,7 @@ def _build_parser() -> argparse.ArgumentParser:
     g.add_argument("--clear", action="store_true")
     c_pat.set_defaults(func=_cmd_cred_pat)
 
-    c_helper = csub.add_parser("helper", help="Register or unregister git-credential-dgh")
+    c_helper = csub.add_parser("helper", help="Register or unregister git-credential-wooven")
     c_helper.add_argument("--unregister", action="store_true")
     c_helper.set_defaults(func=_cmd_cred_helper)
 
@@ -141,6 +171,35 @@ def _build_parser() -> argparse.ArgumentParser:
     c_setup.add_argument("--transport", choices=("ssh", "https"), required=True)
     c_setup.set_defaults(func=_cmd_cred_setup)
 
+    service = sub.add_parser("service", help="Background daemon and platform service")
+    ssub = service.add_subparsers(dest="service_action", required=True)
+
+    s_status = ssub.add_parser("status", help="Show daemon and install status")
+    s_status.set_defaults(func=_cmd_service_status)
+
+    s_start = ssub.add_parser("start", help="Start daemon (via platform service or foreground)")
+    s_start.add_argument(
+        "-f",
+        "--foreground",
+        action="store_true",
+        help="Run daemon in foreground instead of platform service",
+    )
+    s_start.set_defaults(func=_cmd_service_start)
+
+    s_stop = ssub.add_parser("stop", help="Stop running daemon")
+    s_stop.set_defaults(func=_cmd_service_stop)
+
+    s_install = ssub.add_parser("install", help="Install git shim, helper, and platform service")
+    s_install.add_argument(
+        "--skip-service",
+        action="store_true",
+        help="Install shim and helper only; do not register platform service",
+    )
+    s_install.set_defaults(func=_cmd_service_install)
+
+    s_uninstall = ssub.add_parser("uninstall", help="Remove platform service")
+    s_uninstall.set_defaults(func=_cmd_service_uninstall)
+
     return p
 
 
@@ -152,9 +211,11 @@ def main() -> None:
         raise SystemExit(0)
     if args.command == "cred":
         raise SystemExit(args.func(args))
-    from deepiri_git_handshake.tui import GitHandshakeApp
+    if args.command == "service":
+        raise SystemExit(args.func(args))
+    from deepiri_wooven.tui import WoovenApp
 
-    GitHandshakeApp().run()
+    WoovenApp().run()
 
 
 if __name__ == "__main__":

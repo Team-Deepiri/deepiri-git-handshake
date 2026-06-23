@@ -1,7 +1,7 @@
 [project]
-name = "deepiri-git-handshake"
-version = "0.2.0"
-description = "TUI + CLI credential vault: SSH/HTTPS profiles, OS keyring PAT, git-credential-dgh, clone by owner/repo"
+name = "deepiri-wooven"
+version = "0.3.0"
+description = "TUI + CLI credential vault: SSH/HTTPS profiles, OS keyring PAT, git-credential-wooven, clone by owner/repo"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Team-Deepiri"}]
@@ -16,13 +16,15 @@ dependencies = [
 dev = ["pytest>=7.0"]
 
 [project.scripts]
-deepiri-git-handshake = "deepiri_git_handshake.cli:main"
-dgh = "deepiri_git_handshake.cli:main"
-git-credential-dgh = "deepiri_git_handshake.forge_credential_helper:main"
+deepiri-wooven = "deepiri_wooven.cli:main"
+wooven = "deepiri_wooven.cli:main"
+deepiri-wooven-git = "deepiri_wooven.git_wrapper:main"
+git-credential-wooven = "deepiri_wooven.forge_credential_helper:main"
+deepiri-wooven-daemon = "deepiri_wooven.daemon:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["deepiri_git_handshake*"]
+include = ["deepiri_wooven*"]
 
 [build-system]
 requires = ["setuptools>=65.0", "wheel"]
